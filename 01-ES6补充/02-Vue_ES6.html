@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js:let的块级作用域</title>
+</head>
+
+<body>
+    <!-- 
+    JS中只有函数有作用域
+    ES5之前因为if和for都没有块级作用域的概念,所以很多时候,我们都必须借助于Function的作用域来解决应用外面变量的问题
+    ES6中加入了let,let它就是if和for的块级作用域
+     -->
+    <button>按钮1</button>
+    <button>按钮2</button>
+    <button>按钮3</button>
+    <button>按钮4</button>
+    <button>按钮5</button>
+    <button>按钮6</button>
+    <script src="./js/vue.js"></script>
+    <script>
+
+
+        // 1.变量作用域:变量在什么范围内是可用的
+        // {
+        //     var name = "张小豆";
+        //     console.log(name);
+        // }
+        // console.log('获取的是张小豆',name);
+
+
+        // 2.没有块级作用域引起的问题
+        // var func;
+        // if (true){
+        //     var name="吕懒懒";
+        //     func=function(){
+        //         console.log('获取的是吕懒懒',name)
+        //     }
+        // }
+        // name="二郎神";
+        // func()
+        // console.log(name)
+
+
+        //3.没有块级作用域引起的问题:for的块级 
+        // 为什么闭包可以解决问题:函数是一个作用域
+        // var btns = document.getElementsByTagName('button');
+        // for (var i = 0; i < btns.length; i++) {
+        //     btns[i].addEventListener('click', function () {
+        //         console.log('第' + i + '个按钮被点击');
+
+        //     })
+
+        // }
+
+
+        // 闭包的写法for
+        // var buttons = document.getElementsByTagName('button');
+        // for (var i = 0; i < buttons.length; i++) {
+        //     (function (i) {//函数的有自己的参数值
+        //         buttons[i].addEventListener('click', function () {
+        //             console.log('第' + i + '个按钮被点击');
+        //         })
+        //     })(i)
+
+
+        // }
+
+
+        // 闭包的写法函数有自己的作用域
+        // var name="张三"
+        // function abc(name){
+        //     console.log(name)
+        // }
+        // name="李四"
+        // abc("王五")
+
+
+        // let的块级作用域
+        var buttons = document.getElementsByTagName('button');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function () {
+                console.log('第' + i + '个按钮被点击');
+
+            })
+
+        }
+    </script>
+</body>
+
+</html>
