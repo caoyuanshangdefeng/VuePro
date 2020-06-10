@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js计数器</title>
+</head>
+<body>
+    <div id="counter_app">
+        <h2>当前计数:{{counter}}</h2>
+        <!-- v-on:click v-on监听的click事件,
+        当事件变得复杂的时候不使用 -->
+        <!-- <button v-on:click="counter++">+</button> -->
+        <!-- <button v-on:click="counter--">-</button> -->
+
+        <button v-on:click="add">+</button>
+        <button v-on:click="sub">-</button>
+      
+        <!-- //increment增量
+        <button @click="increment">+</button>
+        //decrement减量
+        <button @click="decrement">-</button> -->
+    
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        //语法糖:简写v-on:click==@click
+        let counter_app = new Vue({
+            el : "#counter_app",
+            data : {
+                counter : 0
+            },
+
+            //方法1:
+            methods : {
+                add : function(){
+                    this.counter++//this指当前对象
+                    console.log("add被执行")
+                },
+                sub : function(){
+                    this.counter--
+                    console.log("sub被执行")
+                }
+            }
+            // 方法2:
+            // methods : {
+            //     increment() {
+            //         this.counter++
+            //     },
+            //     decrement(){
+            //         this.counter--
+            //     }
+            // }
+
+        })
+    </script>
+    <!--
+        1.拿button元素
+        2.添加监听事件
+
+
+    -->
+
+
+</body>
+</html>
