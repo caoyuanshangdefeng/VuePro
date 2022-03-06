@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>普通函数与箭头函数的区别-2</title>
+</head>
+<body>
+  <div>普通函数与箭头函数的区别</div>
+  <!-- 
+    箭头函数的this如果指向普通函数,它的argumens继承于该普通函数。
+
+    如何来获取箭头函数不定数量的参数呢？答案是：ES6的rest参数（…扩展符）
+    rest参数获取函数的多余参数
+
+    这是ES6的API，用于获取函数不定数量的参数数组，这个API是用来替代arguments的，API用法如下：
+    let a = (first, ...abc) => {
+      console.log(first, abc); // 1 [2, 3, 4]
+      };
+      a(1, 2, 3, 4);
+
+   -->
+  <script>
+    function bar() {
+      console.log(arguments,1111); // ['外层第二个普通函数的参数']
+      bb('外层第一个普通函数的参数');
+      function bb() {
+        console.log(arguments,2222); // ["外层第一个普通函数的参数"]
+        let a = () => {
+          console.log(arguments, 'arguments继承this指向的那个普通函数'); // ["外层第一个普通函数的参数"]
+        };
+        a('箭头函数的参数'); // this指向bb
+      }
+    }
+    bar('外层第二个普通函数的参数');
+
+
+    let a = (first, ...abc) => {
+      console.log(first, abc); // 1 [2, 3, 4]
+      };
+    a(1, 2, 3, 4);
+    // 上面的例子展示了，获取函数除第一个确定的参数，以及用一个变量接收其他剩余参数的示例。
+    // 也可以直接接收函数的所有参数，rest参数的用法相对于arguments的优点：
+    // 1.箭头函数和普通函数都可以使用。
+    // 2.更加灵活，接收参数的数量完全自定义。
+    // 3.可读性更好
+    //   参数都是在函数括号中定义的，不会突然出现一个arguments，以前刚见到的时候，真的好奇怪了！
+    // 4.rest是一个真正的数组，可以使用数组的API。
+    //   因为arguments是一个类数组的对象，有些人以为它是真正的数组，所以会出现以下场景：
+    //   arguments.push(0); // arguments.push is not a function
+    //   如上，如果我们需要使用数组的API，需要使用扩展符/Array.from来将它转换成真正的数组:
+    //   arguments = [...arguments]; 或者 ：arguments = Array.from(arguments);
+    // rest参数有两点需要注意：
+    // rest必须是函数的最后一位参数：
+    //   let a = (first, ...rest, three) => {
+    //     console.log(first, rest,three); // 报错：Rest parameter must be last formal parameter
+    //   };
+    //   a(1, 2, 3, 4);
+    //   函数的length属性，不包括rest 参数
+    //   (function(...a) {}).length  // 0
+    //   (function(a, ...b) {}).length  // 1
+
+
+
+
+
+    // 使用new调用箭头函数会报错
+    // 无论箭头函数的thsi指向哪里，使用new调用箭头函数都会报错，因为箭头函数没有constructor
+    // let a = () => {};
+    // let b = new  a(); // a is not a constructor
+    // 箭头函数不支持new.target：
+    // new.target是ES6新引入的属性，普通函数如果通过new调用，new.target会返回该函数的引用。
+    // 此属性主要：用于确定构造函数是否为new调用的。
+    // 箭头函数的this指向全局对象，在箭头函数中使用箭头函数会报错
+    // let a = () => {
+    //   console.log(new.target); // 报错：new.target 不允许在这里使用
+    // };
+    // a();
+
+    // 箭头函数的this指向普通函数，它的new.target就是指向该普通函数的引用!!!
+    
+    // new bb();
+    // function bb() {
+    //   let a = () => {
+    //     console.log(new.target); // 指向函数bb：function bb(){...}
+    //   };
+    //   a();
+    // }
+
+
+
+    // 箭头函数不支持重命名函数参数,普通函数的函数参数支持重命名
+    // 如下示例，普通函数的函数参数支持重命名，后面出现的会覆盖前面的，箭头函数会抛出错误：
+    // function func1(a, a) {
+    //   console.log(a, arguments); // 2 [1,2]
+    // }
+
+    // var func2 = (a,a) => {
+    //   console.log(a); // 报错：在此上下文中不允许重复参数名称
+    // };
+    // func1(1, 2); func2(1, 2);
+
+
+
+    // 箭头函数相对于普通函数语法更简洁优雅：
+    // 讲道理，语法上的不同，也属与它们两个的区别！
+
+    // 箭头函数都是匿名函数，并且都不用写function
+    // 只有一个参数的时候可以省略括号:
+    // var f = a => a; // 传入a 返回a
+    // 函数只有一条语句时可以省略{}和return
+    // var f = (a,b,c) => a; // 传入a,b,c 返回a
+    // 简化回调函数，让你的回调函数更优雅：
+    // [1,2,3].map(function (x) {
+    //   return x * x;
+    // }); // 普通函数写法 
+    // [1,2,3].map(x => x * x); // 箭头函数只需要一行
+
+
+
+
+    // 箭头函数的注意事项及不适用场景!!!
+    // 箭头函数的注意事项!!!
+    // 1.一条语句返回对象字面量，需要加括号，或者直接写成多条语句的return形式，否则像func中演示的一样，
+    // 花括号会被解析为多条语句的花括号，不能正确解析
+
+    // var func1 = () => { foo: 1 }; // 想返回一个对象,花括号被当成多条语句来解析，执行后返回undefined
+    // var func2 = () => ({foo: 1}); // 用圆括号是正确的写法
+    // var func2 = () => {
+    //   return {
+    //     foo: 1 // 更推荐直接当成多条语句的形式来写，可读性高
+    //   };
+    // };
+
+    // 2.箭头函数在参数和箭头之间不能换行！！！
+    // var func = ()
+    //        => 1;  // 报错： Unexpected token =>
+    // 3.箭头函数的解析顺序相对靠前
+    //   MDN: 虽然箭头函数中的箭头不是运算符，但箭头函数具有与常规函数不同的特殊运算符优先级解析规则
+    //   let a = false || function() {}; // ok
+    //   let b = false || () => {}; // Malformed arrow function parameter list
+    //   let c = false || (() => {}); // ok
+
+    // 箭头函数不适用场景！！！：
+    // 围绕两点：箭头函数的this意外指向和代码的可读性。
+    // 1.定义字面量方法,this的意外指向。
+    // 因为箭头函数的简洁
+    // const obj = {
+    //   array: [1, 2, 3],
+    //   sum: () => {
+    //     // 根据上文学到的：外层没有普通函数this会指向全局对象
+    //     return this.array.push('全局对象下没有array，这里会报错'); // 找不到push方法
+    //   }
+    // };
+    // obj.sum();
+    // 上述例子使用普通函数或者ES6中的方法简写的来定义方法，就没有问题了：
+    // // 这两种写法是等价的
+    // sum() {
+    //   return this.array.push('this指向obj');
+    // }
+    // sum: function() {
+    //   return this.array.push('this指向obj');
+    // }
+    // 还有一种情况是给普通函数的原型定义方法的时候，通常会在普通函数的外部进行定义，比如说继承/添加方法的时候。
+    // 这时候因为没有在普通函数的内部进行定义，所以this会指向其他普通函数，或者全局对象上，导致bug！
+
+    // 2.回调函数的动态this
+    // 下文是一个修改dom文本的操作，因为this指向错误，导致修改失败：
+    // const button = document.getElementById('myButton');
+    // button.addEventListener('click', () => {
+    //     this.innerHTML = 'Clicked button'; // this又指向了全局
+    // });
+
+
+    // 考虑代码的可读性，使用普通函数
+    // 函数体复杂：
+    // 具体表现就是箭头函数中使用多个三元运算符号，就是不换行，非要在一行内写完，非常恶心！
+    // 行数较多；
+    // 函数内部有大量操作。
+
+
+    // 总结：
+    // 普通函数和箭头函数的区别：
+
+    // 1.箭头函数没有prototype(原型)，所以箭头函数本身没有this
+    // 2.箭头函数的this在定义的时候继承自外层第一个普通函数的this。
+    // 3.如果箭头函数外层没有普通函数，严格模式和非严格模式下它的this都会指向window(全局对象)
+    // 4.箭头函数本身的this指向不能改变，但可以修改它要继承的对象的this。
+    // 5.箭头函数的this指向全局，使用arguments会报未声明的错误。
+    // 6.箭头函数的this指向普通函数时,它的argumens继承于该普通函数
+    // 7.使用new调用箭头函数会报错，因为箭头函数没有constructor
+    // 8.箭头函数不支持new.target
+    // 9.箭头函数不支持重命名函数参数,普通函数的函数参数支持重命名
+    // 10.箭头函数相对于普通函数语法更简洁优雅
+
+
+
+    // 箭头函数的注意事项及不适用场景
+
+    // 1.箭头函数的注意事项：
+    //   a.箭头函数一条语句返回对象字面量，需要加括号
+    //   b.箭头函数在参数和箭头之间不能换行
+    //   c.箭头函数的解析顺序相对||靠前
+    // 2.不适用场景：箭头函数的this意外指向和代码的可读性。
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  </script>
+</body>
+</html>
