@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ES6_Promise的all方法</title>
+</head>
+
+<body>
+  <div>
+    <p>ES6_Promise的all方法</p>
+  </div>
+  <script>
+    // 普通方式
+    // // 1.请求1
+    // let isResult1 = false
+    // let isResult2 = false
+    // $ajax({
+    //   url:'',
+    //   success:function(){
+    //     console.log('result1');
+    //     isResult1=true;
+    //     handleResult()
+    //   }
+    // })
+    // // 2.请求二
+    // $ajax({
+    //   url:'',
+    //   success:function(){
+    //     console.log('result2');
+    //     isResult2=true;
+    //     handleResult()
+    //   }
+    // })
+    // function handleResult(){
+    //     if (isResult1&&isResult2){
+    //       console.log('成功');
+    //     }
+    //   }
+    
+
+    // Promise方式
+    // Promise.all([
+    //   new Promise((resolve,reject)=>{
+    //     $ajax({
+    //       url:'url1',
+    //       success:function(data){
+    //         console.log('result1');
+    //         resolve(data)
+    //       }
+    //     })
+    //   }),
+
+    //   new Promise((resolve,reject)=>{
+    //     $ajax({
+    //       url:'url2',
+    //       success:function(data){
+    //         console.log('result1');
+    //         resolve(data)
+    //       }
+    //     })
+    //   })
+    // ]).then(results=>{
+    //   console.log(results[0]);
+    //   console.log(results[1]);
+    //   })
+
+    // Promise举个栗子
+    Promise.all([
+      new Promise((resolve,reject)=>{
+       setTimeout(()=>{
+         resolve('First wait 2s')
+       },2000)
+      }),
+
+      new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+         resolve('two wait 1s')
+       },1000)
+      })
+    ]).then(results=>{
+      console.log(results);
+  
+      })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+ES6_Promise
+
+一、promise基本概念
+	1.名称:Promise[ˈprɒmɪs]:许诺，允诺；希望;表达了将来会执行的操作，代表异步操作
+		promise是异步编程的一种解决方案,用的时候和异步操作有关系
+		网络请求异步
+	2.状态:三种状态，分别为pending（进行中）、fulfilled（已成功）和rejected（已失败）。
+	3.特点:
+		(1)只有异步操作可以决定当前处于的状态，并且任何其他操作无法改变这个状态；
+		(2)一旦状态改变，就不会在变。状态改变的过程只可能是：从pending变为fulfilled和从pending变为rejected。如果状态发生上述变化后，此时状态就不会在改变了，这时就称为resolved（已定型）
+二、异步事件
+	1.异步网络请求
+	2.使用Ajax多重嵌套有可能导致回调地狱(好多层级的回调)
+三、网络请求的回调地狱举例
+	1.代码举例
+		$.ajax('url1',function(data1){
+			$.ajax(data1['url2'],function(data2){
+				$.ajax(data2['url3'],function(data3){
+					$.ajax(data3['url4'],function(data4){
+					console.log(data4)
+					})
+				})
+			})
+	2.步骤解析
+		a.需要通过一个url1从服务器加载一个数据data1,data1中包含了下一个请求的url2;
+		b.需要通过一个url2从服务器加载一个数据data2,data2中包含了下一个请求的url3;
+		c.需要通过一个url3从服务器加载一个数据data3,data3中包含了下一个请求的url4;
+		d.需要通过一个url4,获取最终的数据data4.
+		这样的代码不易维护,可以使用promise.
+四、定时器的异步事件
+	1.Promise的基本语法
+		a.使用定时器
+			假设data是从网络上1s后请求的数据;
+			console.log就是我们的处理方式将数据进行打印;
+			setTimeout(function(){
+				let data='hello promise'
+				console.log(data);
+			},1000)
+		b.将a中的方法转为promise
+			new Promise((resolve,reject)=>{
+				setTimeout(function(){
+					resolve('hello promise')
+					reject('Error data)
+				},1000)
+			}).then(data=>{
+				console.log(data);
+			}).catch(error=>{
+				console.log(error);
+			})
+
+
+	2.Promise包含的内容
+		a.resolve[rɪˈzɒlv]决定；溶解；使……分解；决心要做……；[主化]解析:
+		b.reject[rɪˈdʒekt]拒绝；排斥；抵制；丢弃:
+		c.then[ðen] 然后；那么；于是；当时；此外:
+		d.catch[kætʃ] 赶上；抓住；感染；了解:
+		Promise是一个构造函数，接受一个回调函数作为参数，回调函数的参数是resolve、reject。
+		分别表示异步操作执行成功后的回调函数和异步操作执行失败后的回调函数。
+		其实这里用“成功”和“失败”来描述并不准确，按照标准来讲，
+		resolve是将Promise的状态置为fullfiled，reject是将Promise的状态置为rejected。
+		ES6_Promise基本使用.html示例:
+			<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<title>ES6_Promise基本使用</title>
+				</head>
+				<body>
+					<script>
+						new Promise((resolve,reject)=>{
+							setTimeout(()=>{
+								console.log('hello Promise');
+								resolve('hello Promise')
+							},1000)
+						}).then(data=>{
+							console.log(data+222);
+						})
+					</script>
+				</body>
+				</html>
+		浏览器console返回值:
+			hello Promise
+			html:16 hello Promise222
+		new->构造函数(1.保存了一些状态信息,2.执行传入的函数)
+		在执行传入的回调函数时,会传入2个参数,resolve,reject,本身又是函数
+
+五、Promise三种状态
+	sync:同步;synchronization[ˌsɪŋkrənaɪˈzeɪʃn]同步；同时性
+	async:异步,asynchronization
+	当开发中有异步操作时,就可以给异步操作包装一个Promise,异步操作之后就会有三种状态:
+	1.pending :等待状态,比如正在进行网络请求,或者定时器没有到时间
+	2.fulfill:满足状态,当主动回调了resolve时,就处于该状态,并且回调.then();
+	3.reject:拒绝状态,当主动回调了reject时,就处于该状态,并且会回调.catch().
+	举个例子:02-ES6_Promise的数据处理形式.html
+六、Promise的链式调用
+	在Promise的流程图时,发现无论是then还是catch都可以返回一个Promise对象,所以代码是可以进行链式调用的
+	通过Promise包装一下新的数据,将Promise对象返回
+	1.Promise.resolve():将数据包装成Promise对象,并且在内部回调resolve()函数
+	2.Promise.reject():将数据包装成Promise对象,并且在内部调用reject()函数
+
+七、Promise链式调用的简写
+	1.希望数据直接包装成Promise.resolve,那么在then中可以直接返回数据
+	2.简写
+      // 写法一:
+      // return new Promise((resolve)=>{
+      //   resolve(res+'111')
+      // })
+      // 写法二:
+      // return Promise.reject('error message')
+      return Promise.resolve('flag resolve')
+	   方法三:
+			return 'flag resolve'
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

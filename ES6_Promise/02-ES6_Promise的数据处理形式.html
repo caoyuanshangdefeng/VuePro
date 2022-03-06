@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ES6_Promise的数据处理形式</title>
+</head>
+<body>
+  <script>
+    new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        // resolve('hello Promise')
+        reject('hello vuejs')
+      },1000)
+    }).then(data=>{
+      console.log(data);
+      // hello Promise 浏览器中会打印出'hello Promise'
+    },err=>{
+      console.log(err);
+      // hello vuejs 注释掉resolve时,浏览器会打印出hello vuejs
+    })
+  </script>
+</body>
+</html>
