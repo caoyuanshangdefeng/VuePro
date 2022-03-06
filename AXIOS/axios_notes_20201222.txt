@@ -1,0 +1,192 @@
+一.Vue中发送网络请求方式很多,开发中如何选择?
+  a.选择一:传统的Ajax是基于XMLHttpRequset(XHR)
+    为什么不使用它?
+      1.配置和调用方式等混乱
+      2.编码困难
+      3.开发时不可以直接使用,需要借助jquery-Ajax 
+  b.选择二:jQuery-Ajax 相对于传统的Ajax好用
+    为什么不使用它?
+      1.在Vue中是不需要使用jQuery的,引用则不合理
+      2.代码数量,jQuery代码1w+,Vue代码1W+
+      3.没有必要为了网络请求引用一个重量级的框架
+二.官方2016年开始推荐axios
+  a.功能特点:
+    1.在浏览器中发送XMLHttpRequests请求
+    2.在node.js中发送http请求
+    3.支持promise API
+    4.拦截请求和响应
+    5.转换请求和响应数据
+    axios: ajax i/o system
+  b.axios支持的请求方式
+    支持多种请求方式
+    1.axios(config)
+    2.axios.request(config)
+    3.axios.get(url[,config])
+    4.axios.delete(url[,config])
+    5.axios.head(url[,config])
+    6.axios.post(url[,data[,config]])
+    7.axios.put(url[,data[,config]])
+    8.axios.patch(url[,data[,config]])
+
+三.axios的使用
+  a.安装axios
+    npm install axios --save
+    后期生产也会使用
+
+四.axios并发请求
+  AXIOS发送并发请求
+	使用axios.all,可以放入多个请求的数组
+	axios.all([])返回的结果是一个数组,使用axios.spread可将数组[res1,res2]展开为res1,res2;
+	举个栗子
+	import axios from 'axios'
+	方法1:
+	export default {
+	name : 'app',
+	create(){
+	//发送并发请求
+		axios.all([axios.get('http://123.207.32.32:8000/category'),
+				axios.get('http://123.207.32.32:8000/home/data',
+				{params:{type:'sell',page:1}})
+				])
+				.then(axios.spread((res1,res2)=>{
+				console.log(res1);
+				console.log(res2);
+				}
+			}
+		}
+
+  方法2:
+  axios.all(
+  [
+    axios({
+      url:'http://123.207.32.32:8000/home/multidata',
+    }),
+    axios({
+      url:'http://123.207.32.32:8000/home/data',
+      params:{
+        type:'pop',
+        page:1
+      }
+    })
+    ]
+
+    ).then(res=>{
+      console.log('res1',res[0]);
+      console.log('res2',res[1]);
+    })
+
+五.axios的配置信息相关
+  a.axios全局配置
+    1.axios.defaults.baseURL='123.207.32.32:8000'
+    2.axios.defaults.headers.post['Content-type']='application/x-www-form-urlencoded'
+	1.请求地址
+	url:'/user'
+	2.请求类型
+	method:'get'
+	3.请求路径
+	baseURL:'http://www.mt.com/api'
+	4.请求前的数据处理
+	transformRequest:[function(data){}]
+	5.请求后的数据处理
+	transformResponse:[function(data){}]
+	6.自定义请求头
+	header:{'x-Requested-with':'XMLHttpRequest'},
+	7.URL查询对象
+	params:{id:12},
+	8.查询对象序列化函数
+	paramsSerializer:function(params){}
+	9.request body   post请求!!!!!!
+	data:{key:'aa'}
+	10.超时设置ms:
+	timeout:1000,
+	11.跨域是否带token
+	withCredentials:false  credentials[krəˈdenʃlz][管理] 证书；文凭；信任状
+	12.自定义请求处理
+	adapter:function(resolve,reject,config){}
+	adapter[ə'dæptə] n. 适配器；改编者；接合器；适应者
+	resolve[rɪˈzɒlv]vt. 决定；溶解；使……分解；决心要做……；[主化]解析
+	reject[rɪˈdʒekt]vt. 拒绝；排斥；抵制；丢弃
+	13.身份验证信息
+	auth:{uname:'',pwd:'12'}
+	14.响应的数据格式
+	json/blob/document/arraybuffer/text/stream
+	responseType:'json',
+
+
+
+六.axios的实例
+	Why create an AXIOS instance?
+  AXIOS : AxiosStatic
+  内部属于一个接口,config相当于参数
+	1.从axios模块中导入对象时,使用的实例是默认的实例
+	2.当给实例设置一些默认配置时,这些配置就被固定下来了
+	3.后续开发时,某些配置可能不一样,则需要重新配置
+	4.比如某些请求需要使用特定的baseURL或者timeout或者content-type等
+	5.可以创建新的实例,并传入属于该实例的配置信息
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
