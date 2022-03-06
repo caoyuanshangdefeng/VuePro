@@ -1,0 +1,789 @@
+
+npm 安装中的 i、-g、--save、--save-dev、-D、-S的区别
+
+	说明:
+	i 是 install 的简写
+	-g 是全局安装，不带 -g 会安装在个人文件夹
+	-S 与 --save 的简写，安装包信息会写入 dependencies 中
+	-D 与 --save-dev 的简写，安装包写入 devDependencies 中
+
+	dependencies 与 devDependencies
+
+	dependencies 生产阶段的依赖,也就是项目运行时的依赖
+	devDependencies 开发阶段的依赖，就是我们在开发过程中需要的依赖，只在开发阶段起作用的
+
+	举例说明
+	ES6 代码，需要 babel 转换成 es5 ，转换完成后，我们只需要转换后的代码，上线的时候，直接把转换后的代码部署到生产环境，不需要 bebal 了，生产环境不需要。这就可以安装到 devDependencies ，再比如说代码提示工具，也可以安装到 devDependencies 。
+	如果你用了 Element-UI，由于发布到生产后还是依赖 Element-UI，这就可以安装到 dependencies 
+
+npm 安装中的--save、--save-dev的区别
+	一、模式
+	运行webpack命令时，一定要指定模式。
+	webpack --mode development
+	webpack --mode production
+	二、--save -dev
+	--save：将保存配置信息到pacjage.json。默认为dependencies节点中。
+	--dev：将保存配置信息devDependencies节点中。
+	因此：
+
+	--save：将保存配置信息到pacjage.json的dependencies节点中。
+	--save-dev：将保存配置信息到pacjage.json的devDependencies节点中。
+
+	dependencies：运行时的依赖，发布后，即生产环境下还需要用的模块
+	devDependencies：开发时的依赖。里面的模块是开发时用的，发布时用不到它。
+
+一、什么是路由和其中映射关系
+一.路由简介
+	1.路由是网络工程里面的一个术语
+	2.路由(routing)是通过互联的网络把信息从源地址传输到目的地址的活动--->维基百科
+二.路由的作用
+路由器有两种机制:路由和转送
+	1.路由是决定数据包从来源到目的地的路径
+	2.转送是输入端的数据转移到合适的输出端
+三.路由中有个非常重要的概念叫路由表
+	路由表本质上就是一个映射表,决定了数据包的指向
+IP流程需注意
+
+二、前端渲染后端渲染
+	一.前端渲染后端渲染介绍
+		1.前端渲染说明:
+	    前端渲染就是指后端返回JSON数据或者JSONP数据，在前端利用预先写的html模板，循环读取JSON数据或者JSONP数据，进行选取,拼接，并且将这些数据插入页面来达到渲染效果。
+		2.后端渲染说明:
+	    前端进行数据请求，后端用后台模板引擎直接生成html，前端接受到数据之后，直接插入页面。
+	二.前端渲染后端渲染优缺点
+		1.前端渲染:
+		好处：网络传输数据量小。不占用服务端运算资源（解析模板），模板在前端（很有可能仅部分在前端），改结构变交互都前端自己来了，改完自己调就行。
+		坏处：前端耗时较多，对前端工作人员水平要求相对较高。前端代码较多，因为部分以前在后台处理的交互逻辑交给了前端处理。占用少部分客户端运算资源用于解析模板。
+		2.后端渲染
+		好处：前端耗时少，即减少了首屏时间，模板统一在后端。前端（相对）省事，不占用客户端运算资源（解析模板）
+		坏处：占用服务器资源。
+	三.前端渲染与后端渲染性能对比：
+		1.前端渲染：
+		页面呈现速度：主要受限于带宽和客户端机器的好坏，优化效果好，可以逐步动态展开内容，感觉上会更快一点。
+		可维护性强，前后端分离，各施其职，代码一目明了。
+		SEO友好度(seo=Search(搜索) Engine(引擎) Optimization(优化),即搜索引擎优化)：差，大量使用ajax，多数浏览器不能抓取ajax数据。
+		编码效率：高，前后端各自只做自己擅长的东西，后端最后只输出接口，不用管页面呈现，只要前后端人员能力不错，效率不会低。
+		2.后端渲染：
+		页面呈现速度：快，受限于用户的带宽
+		可维护性：差（前后端不分离）
+		SEO友好度：好,后端的数据一步搞定,直接生成相对应的模板网页
+		编码效率：低（有时候可能手忙脚乱,找不到数据对应的位置或者数据）
+
+三、前端路由后端路由
+	一.前端路由后端路由介绍
+		1.前端路由说明:
+		很重要的一点是页面不刷新，前端路由就是把不同路由对应不同的内容或页面的任务交给前端来做，每跳转到不同的URL都是使用前端的锚点路由. 
+		随着（SPA）单页应用的不断普及，前后端开发分离，目前项目基本都使用前端路由，在项目使用期间页面不会重新加载。
+		2.后端路由说明:
+		浏览器在地址栏中切换不同的url时，每次都向后台服务器发出请求，服务器响应请求，在后台拼接html文件传给前端显示, 返回不同的页面,
+		意味着浏览器会刷新页面，网速慢的话说不定屏幕全白再有新内容。后端路由的另外一个极大的问题就是 前后端不分离。      
+	二.前端路由后端路由优缺点
+		1.后端路由优缺点
+		优点:分担了前端的压力，html和数据的拼接都是由服务器完成。     
+		缺点:当项目十分庞大时，加大了服务器端的压力，同时在浏览器端不能输入制定的url路径进行指定模块的访问。另外一个就是如果当前网速过慢，
+		　　那将会延迟页面的加载，对用户体验不是很友好。
+		2.前端路由优缺点
+		优点:
+		a.用户体验好，和后台网速没有关系，不需要每次都从服务器全部获取，快速展现给用户     
+		b.可以再浏览器中输入指定想要访问的url路径地址。      
+		c.实现了前后端的分离，方便开发。有很多框架都带有路由功能模块。
+		缺点:  
+		a.使用浏览器的前进，后退键的时候会重新发送请求，没有合理地利用缓存    
+
+四、后端路由阶段
+	一.早期的网站开发整个HTML页面是由服务器来渲染的
+		服务器直接生产渲染好对应的HTML页面,返回给客户端进行展示
+	二.一个网站,多个页面如何处理
+		1.一个页面有自己对应的网址,也就是URL
+		2.URL会发送到服务器,服务器会通过正则对该URL进行匹配并且交给一个Controller进行处理(Controller控制者)
+		3.Controller进行各种处理,最终生成HTMl或者数据,返回给前端
+		4.当我们页面中需要请求不同的路径内容时,交给服务器进行处理,服务器渲染好整个页面,并且将页面返回给客户端
+		5.渲染好的路由不需要单独加载js和css,可以直接交给浏览器展示,这样有利于SEO优化
+	三.后端路由的缺点
+		1.整个页面的模块由后端人员来编写和维护
+		2.前端人员如果要开发页面,需要通过PHP,java,python来编写页面代码
+		3.同样情况下,HTML代码和数据以及对应的逻辑会混在一起,编写与维护困难
+
+		前后端分离
+		后端只负责提供数据,不负责任何阶段的内容
+		前端渲染:浏览器中显示网页中的大部分内容,都是由前端写的js代码在浏览器中执行,最终渲染出来的网页
+
+五、前端路由阶段
+	一.前后端分离阶段
+		1.随着Ajax的出现,有了前后端分离的开发模式
+		2.后端只提供API来规范数据,前端通过Ajax获取数据,并且在js将数据渲染到页面中
+		3.最大的优点是前后端责任清晰,后端专注数据,前端专注交互和可视化
+		4.并且当移动端(IOS/安卓)出现后,后端不需要进行任何处理,依旧使用之前的API即可
+	二.单页面富应用阶段
+		1.SPA最主要的特点就是在前后端分离的基础上加了一层路由
+		2.前端来维护一套路由规则
+		单页Web应用（single page web application，SPA）： 
+		SPA 是一种特殊的 Web 应用，是加载单个 HTML 页面并在用户与应用程序交互时动态更新该页面的。
+		它将所有的活动局限于一个 Web 页面中，仅在该 Web 页面初始化时加载相应的 HTML 、 JavaScript 、 CSS 。
+		一旦页面加载完成， SPA 不会因为用户的操作而进行页面的重新加载或跳转，
+		而是利用 JavaScript 动态的变换 HTML（采用的是 div 切换显示和隐藏），从而实现UI与用户的交互。
+		在 SPA 应用中，应用加载之后就不会再有整页刷新。相反，展示逻辑预先加载，
+		并有赖于内容Region（区域）中的视图切换来展示内容。
+	三.前端路由的核心
+		1.改变URL,但是页面不进行整体的刷新
+
+六、URL的hash和HTML5的history(掌握)
+	一.URL的hash
+		1.URL的hash也就是锚点(#),本质上是改变window.location的href属性
+		2.可以直接通过赋值(location.hash来改变href,但是页面不发生更新)
+		注:重要是页面不刷新
+		
+		
+		
+		在控制台的console中进行验证：
+		输入:location.hash='aaa'
+		返回'aaa'
+		检查URL:http://localhost:8080/#/aaa
+		href:超链接,href是Hypertext Reference的缩写。意思是指定超链接目标的URL。href 属性的值可以是任何有效文档的相对或绝对URL，包括片段标识符和JavaScript代码段
+		
+		前端的路由映射,根据映射进行渲染,vue-router会自动监听
+	二.HTML5的history模式:pushState;
+		页面不发生更新
+	
+		在控制台的console中进行验证：
+		输入:history.pushState({},'','home')
+		检查URL:http://localhost:8080/home
+		push为栈结构,先进后出原则
+		栈顶永远显示最新的url
+		history.pushState({},'','home')
+		undefined
+		history.pushState({},'','about')
+		undefined
+		history.pushState({},'','me')
+		undefined
+		history.pushState({},'','demo')
+		undefined
+		检查URL:http://localhost:8080/demo
+		
+		history.back()
+		undefined
+		检查URL:http://localhost:8080/me#/
+	三.HTML5的history模式:replaceStates
+		replace为替换,无法进行返回
+		history.replaceStates({},'','home')
+	四.HTML5的history模式:go()
+		history.go(-1)==history.back();-1指弹出一个,
+		history.go(+1)==history.forword();
+		三个接口等同于浏览器的前进后退
+
+七、认识vue-router
+	一.目前前端流行的三大框架都有自己的路由实现
+	1.Angular的ngRouter
+	2.React 的ReactRouter
+	3.Vue的vue-router 
+	二.vue的vue-router 
+	1.vue-router是Vue.js官方的路由组件,它和vue.js是深度集成的,适用于构建单页面应用
+	2.官方网站:https://router.vuejs.org/zh/
+	三.vue-router 是基于路由和组件的
+	1.路由用于设定访问路径,将路径和组件映射起来
+	2.在vue-router的单页面应用中,页面的路径的改变就是组件的切换
+
+八、安装与使用vue-router
+	由于vue-router在发布时需要使用属于生产依赖
+	1.安装vue-router
+		npm install vue-router --save
+	2.使用vue-router
+		在模块化工程中使用它(vue-router是一个插件,通过Vue.use()来安装路由功能
+		a.导入路由对象,并且通过调用Vue.use(VueRouter)
+		b.创建路由实例,并且传入路由映射配置
+		c.在vue实例中挂载创建的路由实例
+	举例:
+		在src文件夹下创建router文件夹
+		创建index.js 
+
+		import Vue from 'vue'
+		import Vuerouter from 'vue-router'
+
+
+		//1.导入vue-router插件
+		Vue.use(VueRouter)
+		//2.创建VueRouter对象
+		const routes=[
+		]
+		const router = new Vuerouter({
+			//配置路由与组件之间的应用关系
+			routes
+			})
+		//3.将router对象传入到VUE实例
+		export default router
+	3.使用vue-router的步骤
+		a.创建路由组件,一个路径和一个路由有对应关系
+		b.配置路由映射,组件和路径映射关系
+		c.使用路由:通过<router-link>和<router-view>
+		c-1.<router-link>:该标签是一个vue-router中已经内置的组件,它会被渲染成一个<a>标签 
+		c-2.<router-view>:该标签会根据当前的路径,动态渲染出不同的组件
+		c-3.网页的其他内容,比如顶部的导航/标题或者底部的一些版权信息等会和<router-view>处于同一个级别
+		c-4.在路由切换时,切换的是<router-view>挂载的组件,其他内容不会发生变化
+
+		router-view作为占位的,组件渲染在什么位置
+		
+
+九、路由的默认值和修改为history模式
+
+	一.首页的默认实现
+		a.默认情况下,进入网站的首页,希望<router-view>渲染首页的内容
+		b.在前期实现中,默认没有显示首页组件,必须让用户点击才可以
+		2.如何让路径默认跳转到首页,并且<router-view>渲染首页组件
+		只需要多配置一个映射就可以了
+		const routes=[
+			{path:'/',
+			redirect:'/home'}
+
+		]
+		redirect[ˌriːdəˈrekt; ˌriːdaɪˈrekt]vt. 使改方向；重新寄送
+		重定向
+		(5)重定向(Redirect)：路由器通过重定向消息通知主机。对于特定的目的地址，如果不是最佳的路由，则通知主机到达目的地的最佳下一跳。
+		3.配置解析
+		a.在routes中多进行一次配置
+		b.path配置的是根路径:'/'
+		c.redirect是重定向,也就是我们将根路径重定向到/home的路径下,这样就可以得到我们想要的结果
+		举个栗子:
+		router文件夹下:
+		index.js中routes对象的内容
+
+		const routes=[
+			{
+			path:'/',
+			//redirect重定向
+			redirect:'/home'
+			},
+			{
+			path:'/home',
+			component:home
+			},
+			{
+			path:'/about',
+			component:About
+			}
+			]
+
+		App.vue文件
+
+		<template>
+			<div id = 'app'>
+				<h2>我是APP组件<h2>
+				<router-link to = "/home" tag='button', replace>首页</router-link>
+				<router-link to = "/about" tag='button', replace>关于</router-link>
+				<router-view></router-view>
+			<div>
+		<template>
+		<script>
+			export default {
+			name:'App'
+			}
+		</script>
+	二.修改为history模式
+		1.改变路径的方式有2种:
+			URL的hash
+			HTML5的history模式
+			默认情况下,路径的改变使用的URL的hash
+		2.如果希望使用HTML5的history模式,非常简单,使用以下配置
+			const router = new VueRouter({
+  //
+			routes,
+			mode:'history',
+
+			})
+
+十、router-link补充
+	前面的router-link中只是使用了一个属性：to，用于指定跳转的路径
+	一.<router-link>还有其他属性
+		1.tag:tag可以指定<router-link>之后渲染成什么组件
+		举个例子:
+		<router-link to='/home' tag='li'>
+		上面的代码会被渲染成一个<li>元素,而不是<a>
+		tag[tæɡ]标签；名称；结束语；附属物
+		2.replace:replace不会留下history记录,所以指定replace的情况下,后退键返回不能返回到上一个页面中
+		3.active-class:当<router-link>对应的路由匹配成功时,会自动给当前的元素设置一个router-link-active的class
+		设置active-class可以修改默认的名称
+		在进行高亮显示导航菜单或者底部tabbar时,会使用到该类
+		但是通常不会修改类的属性,会直接使用默认的router-link-active即可
+
+	二.修改linkActiveClass
+		该class具体的名称也可以通过router实例的属性进行修改
+		router文件中index.js文件中的router实例对象进行修改
+
+		const router = new Vuerouter({
+				//配置路由与组件之间的应用关系
+				routes，
+				mode：'history',
+				linkActiveClass:'active'
+				
+				})
+
+		exact-active-class:
+		类似于active-class,只是在精准匹配下才会出现class
+		后面看嵌套路由时,我们再看下这个属性
+
+		linkActiveClass举个栗子
+		index.js
+		====================================================================================
+
+		import Home from '../components/Home'
+		import About from '../components/About'
+		import User from '../components/User'
+
+
+		//1.通过Vue.use(插件),安装插件
+		Vue.use(VueRouter)
+
+		//2.创建VueRouter对象
+		const routes = [
+			{
+				path:'',
+				//redirect重定向
+				redirect:'/home'
+			},
+			{
+				path:'/home',
+				component:Home
+			},
+			{
+				path:'/about',
+				component:About
+			},
+			{
+				path:'/user',
+				component:User
+			},
+		]
+
+		const router = new VueRouter({
+			//配置路由与组件之间的应用关系
+			routes,
+			mode:'history',
+			linkActiveClass:'active'
+			})
+			
+			
+		//3.将router对象传入到VUE实例
+		export default router
+
+	====================================================================================
+十一、路由代码跳转
+	对App.vue文件进行优化
+	App.vue
+	<template>
+		<div id = 'app'>
+			<h2>我是APP组件<h2>
+			//<router-link to = "/home" tag='button', replace>首页</router-link>
+			//<router-link to = "/about" tag='button', replace>关于</router-link>
+			<button @click="homeClick">首页</button>
+			<button @click="aboutClick">关于</button>
+			<router-view></router-view>
+		<div>
+	<template>
+	<script>
+		export default {
+		name:'App'
+		methods:{
+			homeClick(){
+			//通过代码方式修改路由vue-router 
+			//push =>pushState
+			//this.$router.push('./home')
+			this.$router.replace('/home');
+			console.log('homeClick');
+			},
+			aboutClick(){
+			this.$router.push('/about');
+			this.$router.replace('/about');
+			console.log('aboutClick');
+			}
+		}
+	}
+	</script>
+
+十二、动态路由
+	1.在某些情况下,一个页面的path路径可能是不确定的
+	举个例子:
+	进入用户界面/user/user_id
+	a./user/aaaa或者user/bbbb
+	b.除了有前面的/user之外,后面还跟上了用户的ID
+	c.这种path和Component地匹配关系,称之为动态路由也是路由传递数据的一种方式
+
+	2.文件修改
+	配置路由与组件之间的应用关系进行修改
+	{
+	path:'/user/:id',
+	component:User
+	}
+
+	App.vue文件中<template>进行修改
+
+
+	新增div
+	<div>
+		<h2>{{$router.params.id}}<h2>
+	</div>
+
+
+	<router-link  to="/user/123" >用户</router-link>
+
+	params:n. 参数；参数个数（param的复数）
+
+十三、认识路由的懒加载
+	1.官方解释:
+		a.当打包构建应用时,js包会变得非常大,影响页面加载
+		b.如果能把不同路由对应的组件分割成不同的代码块,然后当路由被访问时才加载对应组件,这样会更加高效
+	2.解析官方的定义
+		a.首先,路由中通常定义很多不同的页面
+		b.页面最后打包在哪里,一般情况下,是放在一个js文件中
+		c.多个页面放在一个js文件中,必然会造成这个页面非常的大
+		d.如果一次性从服务器请求下来这个页面,可能要花费一定的时间,甚至用户在电脑上还出现了短暂空白的情况
+		e.如何解决,使用懒加载方式解决
+	3.路由懒加载
+		a.路由懒加载的主要作用就是将路由对应的组件打包成一个个js代码块
+		b.只有在这个路由被访问到的时候,才会加载对应的组件
+		c.路由懒加载后的效果static文件夹的js文件夹下会生成多个js文件
+	4.执行npm run build之后的dist文件夹解析
+		a.index.html 
+		b.static文件夹
+			b-1.app.a55e8ff83b3a0bb79dd8.js:app开头的文件当前你开发的所有代码(自己写的业务代码)
+			b-2.manifest.2ae2e69a05c33dfc65f8.js:manifest:为我们打包的代码做底层支撑的，大量导入导出
+			b-3.vendor.ec7a743ef8571978a4ba.js:vendor开头的文件，提供商第三方的东西,例如:vue、axios打包到这个文件
+			注：在build的文件夹下的webpack.prod.conf.js中关闭丑化代码的插件，进行重新打包
+
+十四、懒加载的方式
+	app.js文件会越来越大，所以需要将app.js进行分离,否则会出现页面空白等待加载
+	开发中一个路由打包一个js文件,
+	懒加载:用到时再进行加载
+
+	1.方式一
+		结合Vue的异步组件和Webpack的代码分析
+		const Home=resolve=>{
+				require.ensure(['../components/Home.vue'],() =>
+								{
+									resolve(require('../components/Home.vue'))
+								}
+								)
+							}
+	2.方式二:
+		AMD写法:
+		const About = resolve => require(['../components/About.vue'],resolve);
+	3.方式三:
+		ES6中可以使用更加简单的写法来组织VUE异步组件和webpack的代码分割
+		const Home = () => import('../components/Home.vue')
+
+
+	vue-router懒加载方式举例:
+	router文件夹下的index.js文件修改
+
+	index.js
+	====================================================================================
+
+	const Home = () => import ('../components/Home')
+	const About = () => import ('../components/About')
+	const User = () => import ('../components/User')
+
+
+
+	//1.通过Vue.use(插件),安装插件
+	Vue.use(VueRouter)
+
+	//2.创建VueRouter对象
+	//定义路由
+	const routes = [
+		{
+			path:'',
+			//redirect重定向
+			redirect:'/home'
+		},
+		{
+			path:'/home',
+			component:Home
+		},
+		{
+			path:'/about',
+			component:About
+		},
+		{
+			path:'/user',
+			component:User
+		},
+	]
+
+	const router = new VueRouter({
+		//配置路由与组件之间的应用关系
+		routes,
+		mode:'history',
+		linkActiveClass:'active'
+		})
+		
+		
+	//3.将router对象传入到VUE实例
+	export default router
+
+
+
+
+	====================================================================================
+
+十五、认识嵌套路由
+	1.嵌套路由功能
+		a.在home页面中,希望通过/home/news和/home/message访问一些内容
+		b.一个路径映射一个组件,访问这两个路径也会分别渲染两个组件
+
+	2.路径和组件的关系
+
+		路径                             组件
+		/home===========================>Home
+			/home/news==================>News
+			/home/messages==============>Messages
+		/about==========================>About
+
+	3.实现嵌套路由有两个步骤:
+		a.创建对应的子组件,并且在路由映射中配置对应的子路由
+		b.在组件内部使用<router-view>标签
+
+十六、嵌套路由默认路径
+	需要定义两个组件来实现
+
+
+	//定义路由
+	const routes = [
+		path:'/home',
+		component:Home,
+		children:[
+			{
+			path:'message',
+			component:Message
+			},
+			{
+			path:'new',
+			component:News
+			},
+			{
+			path:'',
+			redirect:'message',
+			}
+		]
+		
+十七、路由的参数传递,
+	1.准备工作
+		创建new_component and setting
+		a.create new component named "Profile.vue"
+			profile户资料,n. 侧面；轮廓；外形；剖面；简况
+		b.配置路由映射
+		c.添加跳转的<router-link>
+
+		
+
+十八、传递参数的方式
+	一、传递参数的方式主要有两种：params和query
+		1.params类型
+		a.配置路由格式:/router/:id
+		b.传递的方式:在path后面跟上对应的量
+		<router-link to="'/user/'+userID">用户</router-link>
+		c.传递后形成的路径:/router/123,/router/abc
+
+		2.query的类型:
+		a.配置路由格式:/router,也就是普通配置
+		b.传递的方式:对象中使用query的key作为传递方式
+		c.传递后形成的路径:/router?id=123, /router?id=abc
+
+	二、如何使用params和query进行传递
+		两种方式:<router-link>的方式和JavaScript的代码方式
+
+		3-1、参数传递方式一:<router-link>
+		修改App.vue文件中的<template>
+		<template>
+			<div id = "app">
+				<router-link
+					: to = "{
+						path : '/profile/' + 123,
+						query:{name: 'xiaoguicai',age:2,height:100cm}
+						}"
+				>档案</router-link>
+		http://localhost:8080/profile?name=xiaoguicai&age=2&height=100cm
+		
+
+		3-2、传参方式二:
+		修改App.vue文件
+
+		export default{
+			name:'App',
+			methods:{
+				toProfile(){
+					this.$router.push({
+						path:'/profile/'+123,
+						query: {name:'xiaodou',age:18}
+						})
+					}
+				}
+			}
+
+十九、获取参数
+	1.获取参数通过$router对象获取的
+	在使用了vue-router的应用中,路由对象会被注入每个组件中,赋值为this.$route,并且当路由切换时,路由对象会被更新
+	2. 通过$route获取传递的信息如下:
+	{{$route.params}}                                                           
+	{{$route.query}}
+
+二十、$route和$router是有区别的
+	Vue.use(VueRouter)相当于执行的VueRouter.install
+	Vue.component('RouterView',view)注册的全局组件
+	Vue.component('RouterLink',Link)
+	RouterView==router-view
+	所有的组件都继承着vue类的原型
+
+
+	1.$router为VueRouter实例,想要导航到不同的URL,则使用$router.push方法
+	2.$route为当前router跳转对象里面可以获取name、path、query、params等
+
+
+二十一、为什么使用导航守卫?
+
+	需求:SPA应用,如何改变网页的标题
+	1.网页标题是通过<title>来显示的,但是SPA只有一个固定的HTML,切换不同的页面时,标题也不会改变;
+	2.可以通过javaScript来修改<title>的内容,window.document.title="新的标题";
+	3.修改方式:
+	a.修改标题的位置是每一个路由对应的组件.vue中
+	b.通过mounted声明周期函数,执行对应的代码进行修改即可
+	c.但是当页面太多时,这种方式不容易维护(因为需要在多个页面执行类似的代码)
+
+二十二.导航守卫的使用
+	一.利用beforeEach来完成标题的修改
+		1.可以在钩子函数当中定义一些标题,可以利用meta来定义
+		2.利用导航守卫来修改标题
+		3.meta:元数据,描述数据的数据
+
+
+
+		举个例子:
+		router.beforeEach((to,form,next)=>{
+			//从from跳转到to
+			//matched永远取第一个
+			document.title=to.matched[0].meta.title
+			console.log(to);
+			next()
+		}
+
+	二.导航钩子的三个参数解析
+		1.to:即将要进入的目标路由对象
+		2.from:当前导航即将离开的路由对象
+		3.next:调用该方法后,才能进入下一个钩子
+
+二十三.导航守卫补充
+	1.如果是后置钩子,也就是afterEach,不需要主动调用next()函数
+	2.当前使用的导航守卫为全局守卫
+	a.路由独享的守卫
+	b.组件内的守卫
+
+
+二十四、keep-alive遇见vue-router
+
+	1.keep-alive是vue内置的一个组件,可以使被包含的组件保留状态,或避免重新渲染
+	a.有两个非常重要的属性:
+	a-1.include-字符串或正则表达式,只有匹配的组件会被缓存;
+	a-2.exclude-字符串或正则表达式,任何匹配的组件都不会被缓存
+
+	2.router-view也是一个组件,如果直接被包含在keep-alive里面,所有路径匹配到的视图组件都会被缓存
+	router-view在vueRouter中定义的组件
+	<keep-alive>
+		<router-view>
+			所有路径匹配到的视图组件都会被缓存
+		</router-view>
+	</keep-alive>
+	3.通过create声明周期函数来验证
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
