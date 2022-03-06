@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue_v-model的radio单选框的使用</title>
+</head>
+<body>
+  <div id = "app_model_radio">
+    <!-- 
+      如果v-model绑定的是同一个,则可以去掉name="sex",v-model绑定的相同的也是互斥的
+      必须添加name属性才可以互斥
+     -->
+    <label for="male">
+
+      <input type="radio" value="男"  id ="male" name="sex" v-model="sex">男
+    </label>
+    <label for="female">
+      <input type="radio" value="女"  id ="female" name="sex" v-model="sex">女
+    </label>
+    <p>选择:{{sex}}</p>
+
+  </div>
+  <script src="../js/vue.js"></script>
+  <script>
+    const app=new Vue({
+      el:"#app_model_radio",
+      data:{
+        
+        sex :"",
+        // 最后可以把sex发送至服务器保存
+      },
+      methods:{
+
+      },
+      computed:{
+
+      }
+    })
+  </script>
+</body>
+</html>

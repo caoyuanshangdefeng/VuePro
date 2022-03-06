@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js compute计算属性复杂</title>
+</head>
+
+<body>
+    <div id="app_computeComplex">
+        <h2>总价:{{totalPrice}}</h2>
+
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app_computeComplex",
+            data: {
+                books: [
+                    { id: 100, bookName: "C语言", price: 120 },
+                    { id: 101, bookName: "java语言", price: 130 },
+                    { id: 102, bookName: "javaScript语言", price: 140 },
+                    { id: 103, bookName: "python语言", price: 150 },
+                    { id: 104, bookName: "goLong语言", price: 160 },
+                ]
+            },
+            computed: {
+                totalPrice: function () {
+                    // ES5语法
+                    let result = 0
+                    // for (let i = 0; i < this.books.length; i++) {
+                    //     result += this.books[i].price
+                    // }
+                    // ES6的语法一
+                    // for (let i in this.books){
+                    //     result +=this.books[i].price
+                    // }
+                    // ES6的语法二
+                    for (let book of this.books){
+                        result +=book.price
+                    }
+                    return result
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

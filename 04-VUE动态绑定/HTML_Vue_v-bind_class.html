@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js v-bind绑定class对象语法</title>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app_bind">
+        <!-- 
+            v-bind动态绑定class
+                示例:
+                当数据为某个状态时,字体显示红色,
+                当数据为另一个状态时,字体显示为黑色
+            绑定class有两种方式:
+                对象语法
+                数组语法
+            绑定方式对象语法
+                对象语法的含义是:class后面跟的是一个对象
+            对象语法有下面这些用法:
+                用法1:直接通过{}绑定一个类
+                <h2 v-bind:class="{active:isActive}">{{message}}</h2>
+                用法2:可以通过判断传入多个值
+                <h2 v-bind:class="{active:isActive,line:isLine}">{{message}}</h2>
+                用法3:和普通的类同时存在并不冲突
+                注:如果isActive和isLine都为true,那么会有title/active/line三个类
+                <h2 class="title",v-bind:class="{active:isActive,line:isLine}">{{message}}</h2>
+                用法4:如果过于复杂,可以放在一个methods或者computed中
+                注:classes是一个计算属性
+                <h2 class="title",v-bind:class="classes">{{message}}</h2>
+
+
+
+
+
+
+         -->
+        <!-- <h2 class="active">{{message}}</h2> -->
+        <!-- <h2 :class="active">{{message}}</h2> -->
+        <!-- <h2 v-bind : class="{key1:value1,key2:value2}">{{message}}</h2> -->
+        <!-- <h2 v-bind : class="{类型1:true,类型2:boolean}">{{message}}</h2> -->
+        <!-- <h2 v-bind:class="{active:isActive,line:isLine}">{{message}}</h2> -->
+        <h2 class="title" v-bind:class="get_classes()">{{message}}</h2>
+
+        <button v-on:click="btn_click">按钮</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        // let(变量);const(常量)
+        // 编程范式:声明式编程
+        let app = new Vue({
+            el: "#app_bind",//用于挂载管理的元素
+            data: {//定义数据
+                message: "Vue.js",
+                // active: "active",
+                isActive: true,
+                isLine: true,
+            },
+            methods: {
+                btn_click: function () {
+                    this.isActive = !this.isActive
+                },
+                // 用法4
+                get_classes: function () {
+                    return { active: this.isActive, line: this.isLine }
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js条件判断v-if</title>
+</head>
+<body>
+    <!-- 
+        vue条件判断:
+        v-if/v-else-if/v-else
+            这三个指令与JS的条件语句if、else、else if类似
+            Vue的条件指令可以根据表达式在DOM中渲染或销毁元素和组件
+        v-if原理：
+            v-if后面的条件为false，对应的元素以及其子元素不会渲染
+            也就是根本没有不会有对应的标签出现在DOM中
+
+     -->
+     <div id="app_v_if" >
+         <!-- 
+            v-if="true"时,message进行显示;
+            v-if="false"时,message进行显示;
+          -->
+        <h2 v-if="isShow">{{message}}</h2>
+        <h1 v-else>当is-show为false时,进行显示</h1>
+        <button @click="isShow=!isShow">切换显示</button>
+
+     </div>
+     <script src="../js/vue.js"></script>
+     <script>
+        const app=new Vue({
+            el :"#app_v_if",
+            data:{
+                message:"zhangsan",
+                isShow:false,
+            }
+        })
+     </script>
+</body>
+</html>

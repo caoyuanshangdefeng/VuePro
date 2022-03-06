@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js计算属性的缓存</title>
+</head>
+<body>
+    <!-- 
+        Vue计算属性和methods的对比
+        计算属性会进行缓存,如果多次使用时,计算属性只会调用一次
+     -->
+    <div id="app_computeComplex">
+        <!-- 1.直接拼接,语法过于繁琐 -->
+        <h2>{{firstName}}{{lastName}}</h2>
+        <!-- 2.通过定义methods 
+            可以在控制台发现getFullName被调用了5次-->
+        <h2>getFullName:{{getFullName()}}</h2>
+        <h2>getFullName:{{getFullName()}}</h2>
+        <h2>getFullName:{{getFullName()}}</h2>
+        <h2>getFullName:{{getFullName()}}</h2>
+        <!-- 3.通过定义计算属性
+         可以在控制台发现fullName被调用了5次-->
+        <h2>fullName:{{fullName}}</h2>
+        <h2>fullName:{{fullName}}</h2>
+        <h2>fullName:{{fullName}}</h2>
+        <h2>fullName:{{fullName}}</h2>
+
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app_computeComplex",
+            data: {
+                
+                firstName: "张小豆",
+                lastName: "吕懒懒"
+            },
+            methods : {
+                getFullName : function(){
+                    console.log("getFullName");
+                    
+
+
+                    return this.firstName + this.lastName
+                }
+            },
+            computed : {
+                fullName: function(){
+                    console.log("fullName");
+                    
+                    return this.firstName + this.lastName
+                }
+            }
+            
+            
+        })
+    </script>
+</body>
+</html>

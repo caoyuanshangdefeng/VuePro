@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6对象字面量的增强性写法</title>
+</head>
+<body>
+    <!-- 
+        对象增强写法
+        ES6中,对对象的字面量进行了很多增强
+
+
+
+
+     -->
+     <script>
+        //  const obj={
+        //     name: "张三",
+        //     age:18,
+        //     run:function(){
+        //         console.log("在休息");
+
+
+        //     },
+        //     eat:function(){
+        //         console.log("还要玩");
+        //     }
+            
+        //  }//对象的字面量
+        // 1.属性的增强型
+        const name="张小振";
+        const age=29;
+        const height=1.80;
+
+        // ES5的写法
+        // const obj={
+        //     name :name,
+        //     age:age,
+        //     height:height,
+        // }
+        // ES6的写法
+        // const obj={
+        //     name,
+        //     age,
+        //     height,
+        // }
+        // console.log(obj);
+
+        // 2.函数的增强型
+        // ES5的写法
+        //  const obj={
+        //     run:function(){
+        //         return "还要玩";
+        //     },
+        //     eat:function(){
+        //         console.log("还要吃");
+        //     }
+        //  };
+         
+        // ES6的写法
+        const obj={
+            run(){
+                console.log("在休息");
+            },
+            eat(){
+                console.log("还要吃");
+            }
+        };
+        console.log(obj.run);
+     </script>
+</body>
+</html>

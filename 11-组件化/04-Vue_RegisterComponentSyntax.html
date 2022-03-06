@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件的语法糖注册方式</title>
+</head>
+<body>
+  <!-- 
+    注册组件语法糖
+    Vue为了简化流程，提供了注册的语法糖
+    主要是省去了调用Vue.extend()的步骤,而是可以直接使用一个对象来代替
+   -->
+  <div id = "app_grammar">
+    <!-- cpn1：全局组件 -->
+    <cpn1></cpn1>
+    <!-- cpn2：局部组件 -->
+    <cpn2></cpn2>
+
+  </div>
+  <script src="../js/vue.js"></script>
+  <script>
+    //1.全局组件注册的语法糖
+    // 1.创建组件的构造器
+    // const cpn1=Vue.extend({
+    //   template:
+    //   `
+    //   <div>
+    //     <h2>Title1</h2>
+    //     <p>Inner1</p>
+    //   </div>
+    //   `
+    // }) 
+
+    // 2.注册全局组件的语法糖
+    Vue.component("cpn1",
+    {
+      template:
+      `
+      <div>
+        <h2>Title1</h2>
+        <p>Inner1</p>
+      </div>
+      `
+    }
+    )
+
+
+    // 2.注册局部组件的语法糖
+    const app=new Vue({
+      el:"#app_grammar",
+      data:{
+
+      },
+      methods:{
+
+      },
+      computed:{
+
+      },
+      components:{
+        'cpn2':{
+          template:`
+          <div>
+            <h2>Title2</h2>
+            <p>Inner2</p>
+          </div>
+
+
+
+          `
+        }
+
+      },
+    })
+
+  </script>
+</body>
+</html>

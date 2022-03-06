@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue-Mustache语法</title>
+</head>
+<body>
+    <!-- 
+        插值操作-Mustache语法;
+        插值操作mustache(胡子/胡须);
+        如何将data中的文本数据,插入到HTML中;
+        可以通过Mustache语法(也就是双大括号),数据是响应式.
+    
+    -->
+    <div id = "app_mustache">
+        <!-- 插入到标签中 -->
+        <h2>Hello{{message}}</h2>
+        <!-- 使用了两个Mustache -->
+        <h2>{{firstName}}{{lastName}}</h2>
+        <h2>{{firstName + lastName}}</h2>
+        <h2>{{firstName + " " + lastName}}</h2>
+        <!-- 也可以使用表达式 -->
+        <h2>{{counter * 2}}</h2>
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el : "#app_mustache",
+            data : {
+            message: "你好",
+            name : "VueJS",
+            firstName : "lisi",
+            lastName : "zhangsan",
+            counter : 100
+
+            }
+        })
+    </script>
+</body>
+</html>

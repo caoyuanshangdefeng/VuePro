@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            color:red;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <!-- 点击列表中的一项,该项的内容变红色 -->
+    <div id="app_bindFor">
+        <ul>
+            <li v-on:click="btn_click" v-bind:class="{active:isActive}" v-for="(movieName,index) in movies">{{index}}-{{movieName}}</li>
+        </ul>
+        
+        
+
+       
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        // let(变量);const(常量)
+        // 编程范式:声明式编程
+        let app = new Vue({
+            el: "#app_bindFor",//用于挂载管理的元素
+            data: {//定义数据
+                movies:['海王',"火影忍者","小猪配齐","萌鸡小队"],
+                isActive: false,
+
+
+            },
+            methods: {
+                btn_click:function(){
+                    this.isActive= !this.isActive
+                }
+
+                
+                
+                
+            }
+
+        })
+
+    </script>
+
+
+
+</body>
+
+</html>

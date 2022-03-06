@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js:作用域插槽</title>
+</head>
+<body>
+  <!-- 
+  作用域插槽:
+    父组件替换插槽的标签,但是内容由子组件来提供
+    需求:
+      子组件中包含一组数据,比如:pLanguages:['JavaScript','Java','python','go','C++']
+      需要在多个界面进行展示
+        1.某些界面是以水平方向展示的
+        2.某些界面是以列表形式展示的
+        3.某些界面直接展示一个数组
+      内容在子组件,希望父组件告诉如何展示
+        利用slot作用域插槽就可以
+
+   -->
+
+  <div id = "app_slotScope">
+    <mycpn></mycpn>
+    <!-- 以"-"进行分割展示 -->
+    <mycpn>
+      <!-- 获取子组件的pLanguages 
+      vue2.5x以下必须是一个template模板
+        通过slot来引用这个插槽对象
+
+    -->
+      <!-- <template slot-scope="slot"> -->
+      <template v-slot="slot">
+        <!-- <span v-for="item in slot.data">{{item}}-</span> -->
+        <span>{{slot.data.join('-')}}</span>
+      </template>
+    </mycpn>
+    <mycpn>
+      <template v-slot="slot">
+        <span v-for="item in slot.data">{{item}}*</span>
+        <span>{{slot.data.join('*')}}</span>
+      </template>
+    </mycpn>
+    <mycpn></mycpn>
+  </div>
+
+
+
+<!-- 组件的模板 -->
+  <template id="mytemp">
+    <div>
+      <h2>我是子组件</h2>
+      <p>我是子组件内容</p>
+      <!-- 定义一个data这个名字是随便起的 -->
+      <slot :data="pLanguages">
+        <ul>
+          <li v-for="item in pLanguages">{{item}}</li>
+        </ul>
+    </slot>
+    </div>
+  </template>
+
+
+
+
+<script src="../js/vue.js"></script>
+  <script>
+
+  const app=new Vue({
+    el:"#app_slotScope",
+    data:{
+
+    },
+    methods:{
+
+    },
+    computed:{
+
+    },
+    components:{
+      mycpn:{
+        template:"#mytemp",
+        data(){
+          return {
+            pLanguages:['JavaScript','Java','python','Go','C++'],
+            }
+        }
+      }
+    }
+  })
+
+
+  </script>
+
+
+
+</body>
+</html>

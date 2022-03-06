@@ -1,0 +1,90 @@
+一.认识Vue.js
+    1.Vue的读音
+    2.Vue的渐进式
+    3.Vue的特点
+二.安装Vue
+    1.CDN引入
+    2.下载引入
+    3.npm安装
+三.Vue的初体验
+    mustache语法: "{{ inner }}";体验Vue的响应式
+    Vue的列表展示
+        v-for
+        后面将给数组追加元素,新的元素也可以在界面渲染出来
+    Vue技术起的小案例
+        v-on:事件监听:click->methods
+四.Vue的MVVM
+五.创建Vue时的options
+    el
+    data
+    methods
+    生命周期函数:钩子函数
+六.插值语法
+    mustache语法
+    v-once:数据只改变一次
+    v-html:
+    v-text:
+    v-pre:展示原生的mustache
+    v-pre:
+七.动态绑定属性
+    v-bind绑定基本属性
+        v-bind:src
+        v-bind:href
+    v-bind动态绑定class
+    v-bind动态绑定style
+八.计算属性
+    计算属性的setter和getter
+    计算属性是缓存的
+    
+组件化开发
+前端模块化
+webpack
+Vue的CLI
+
+
+
+
+父子组件通信出现的问题
+[Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders. 
+Avoid避免 mutating修改
+避免直接更改prop，因为每当父组件重新渲染时，该值都会被覆盖。
+Instead, use a data or computed property based on the prop's value. Prop being mutated: "number1"
+而是使用基于属性值的数据或计算属性。 变异的道具：“数字1”
+found in
+
+---> <Cpn>
+       <Root>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
