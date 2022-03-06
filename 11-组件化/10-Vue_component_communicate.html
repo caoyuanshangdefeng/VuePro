@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>父子组件通信案例</title>
+</head>
+
+<body>
+  <!-- 
+    父子组件通信案例
+    问题1
+    问题2
+    问题3
+   -->
+  <div id="component_case">
+    <cpn :number1="num1" :number2="num2" @num1change="num1change" @num2change="num2change" />
+    <!-- 
+      <cpn :number1="num1" :number2="num2">无内容</cpn>
+      <cpn :number1="num1" :number2="num2"/>
+      number1与number2通过父组件来改变,不能直接去修改
+     -->
+  </div>
+
+  <!-- 
+    模板抽离
+   -->
+  <template id="my-cpn">
+    <div>
+      <!-- <h2>{{number1}}</h2>
+      <input type="text" v-model="dnumber1">
+      <h2>{{number2}}</h2>
+      <input type="text" v-model="dnumber2"> -->
+      <h2>props:{{number1}}</h2>
+      <h2>cpnData:{{dnumber1}}</h2>
+      <!-- <input type="text" v-bind:value="dnumber1" @input="num1Input"> -->
+      <!-- 
+        使用watch实现
+       -->
+      <input type="text" v-model="dnumber1">
+      
+      <h2>props:{{number2}}</h2>
+      <h2>cpnData:{{dnumber2}}</h2>
+      <!-- <input type="text" v-bind:value="dnumber2" @input="num2Input"> -->
+      <!-- 
+        使用watch实现
+       -->
+      <input type="text" v-model="dnumber2">
+    </div>
+  </template>
+
+  <script src="../js/vue.js"></script>
+  <script>
+    const cpn = Vue.extend({
+      template: "#my-cpn",
+      props: {
+        // 写成对象最好,可以对对象做限制
+        number1: {
+          type: Number
+        },
+        number2: {
+          type: Number
+        },
+      },
+      data() {
+        return {
+          dnumber1: this.number1,
+          dnumber2: this.number2,
+        }
+
+      },
+      // methods: {
+      //   num1Input(event) {
+      //     // 1.将input中的value赋值到dnumber中
+      //     this.dnumber1 = event.target.value;
+      //     // 2.传出事件,为了让父组件可以修改值,发出事件
+      //     this.$emit('num1change', this.dnumber1)
+      //     // 3.同时修改dnumber2的值,会发现props未修改
+      //     this.dnumber2 = this.dnumber1 * 100
+      //     this.$emit('num2change', this.dnumber2)
+      //   },
+      //   num2Input(event) {
+      //     this.dnumber2 = event.target.value;
+      //     // 传出事件
+      //     this.$emit('num2change', this.dnumber2)
+      //     this.dnumber1 = this.dnumber2 /100
+      //     this.$emit('num1change', this.dnumber1)
+      //   }
+      // }
+      // 使用watch方法
+      watch: {
+        dnumber1(newValue) {
+          this.dnumber2 = newValue * 100;
+          this.$emit('num1change', newValue);
+        },
+        dnumber2(newValue) {
+          this.dnumber1 = newValue / 100;
+          this.$emit('num2change', newValue);
+
+        },
+
+      }
+    })
+    const app = new Vue({
+      el: "#component_case",
+      data: {
+        num1: 1,
+        num2: 0,
+      },
+      methods: {
+        num1change(value) {
+          console.log(typeof value)
+          this.num1 = parseInt(value)
+        },
+        num2change(value) {
+          this.num2 = parseInt(value)
+        }
+      },
+      components: {
+        // 对象可以抽离出去
+        cpn
+      },
+    })
+  </script>
+</body>
+
+</html>

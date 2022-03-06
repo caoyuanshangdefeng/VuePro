@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件的key属性</title>
+</head>
+<body>
+  <!-- 
+    组件的key属性
+    使用v-for时,给对应元素或组件添加上一个:key属性
+    添加key属性的原因:
+      其实和Vue的虚拟DOM的diff算法有关系
+      借用React's diff algorithm中的一张图来简单说明:
+        当某一层有很多相同的节点时,也就是列表节点时插入一个新的节点,希望可以在B和C
+        之间加一个f,Diff算法默认执行起来是这样的
+        即把C更新成F,D更新成C,E更新成D,最后再插入E,是不是很没有效率
+      所以需要使用key来给每个节点做一个唯一标识
+        diff算法就可以正确的识别此节点
+        找到正确的位置区插入新的节点
+    注:key的作用主要是为了高效的更新虚拟DOM
+
+   -->
+   <!-- 数组删除插入元素:app.names(起始位置,删除几个元素,添加元素内容) -->
+   <div id="app_v_for">
+    <ul>
+        <li v-for="item in names">{{item}}</li>
+        <li>-------分割线-------</li>
+        <li v-for="(item,index) in names">{{index+1}}--{{item}}</li>
+        <li>-------分割线-------</li>
+        <li v-for="(valInner,keyInner) in info">{{keyInner}}--{{valInner}}</li>
+
+    </ul>
+
+
+</div>
+<script src="../js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el:"#app_v_for",
+        data:{
+            names:[//数组
+                "张三",
+                "李四",
+                "王五",
+                "麻六",
+            ],
+            info:{//对象
+                name:"张三",
+                age:100,
+                height:100,
+            }  
+            
+        },
+        methods:{
+
+        },
+        computed:{
+
+        },
+
+
+
+    })
+</script>
+</body>
+</html>

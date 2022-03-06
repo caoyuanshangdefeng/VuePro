@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js:插槽基础应用</title>
+</head>
+
+<body>
+  <!-- 
+    使用slot:插槽
+    组件的插槽:
+    组件的插槽是为了让我们封装的组件更加具有扩展性
+    让我们可以决定组件内部一些内容到底展示什么
+    例子:
+      移动开发中,几乎每个页面都有导航栏;
+      导航栏我们必然会封装成一个组件,比如nav-bar组件
+      一旦有个这个组件,就可以在多个页面中复用了
+    如何去封装这类组件:slot
+      她们有很多区别,但是也有很多共性.
+      如果,每一个单独去封装一个组件,显然不合适:比如每个页面都返回,这部分内容我们就要重复去封装
+      但是,我们封装成一个,好像也合理,有些左侧是菜单,有些是返回,有些中间是搜索,有些是文字
+    如何封装合适呢?抽取共性,保留不同
+      最好的封装方式就是将共性抽取到组件中,将不同暴露为插槽
+      一旦我们预留了插槽,就可以让使用者根据自己的需求,决定插槽中插入的内容
+      是搜索框,文字,菜单,由调用着自己决定
+      1.插槽的基本使用<slot></slot>
+      2.插槽的默认值:<slot>button</slot>
+      3.如果有多个值,同时放入到组件进行替换时,一起作为组件替换元素
+
+   -->
+  <div id="app_slot">
+    <h1>mySlot</h1>
+    <!-- 按钮 -->
+    <cpn><button>按钮</button></cpn>
+    <!-- P -->
+    <cpn>
+      <span>插槽span</span>
+    </cpn>
+    <!--  -->
+    <cpn>
+      <i>哈哈哈III</i>
+    </cpn>
+    <cpn></cpn>
+    <cpn></cpn>
+    <cpn></cpn>
+    <cpn>
+      <i>呵呵呵</i>
+      <div>我是div</div>
+      <p>我是P元素,替换插槽</p>
+    </cpn>
+  </div>
+  <template id="cpnslot">
+    <div>
+      <h1>我是组件cpnSlot</h1>
+      <!-- <button>按钮</button> -->
+      <!-- 
+        插槽的不同
+       -->
+      <!-- <slot>
+
+      </slot> -->
+      <slot>
+        <button>按钮默认</button>
+      </slot>
+    </div>
+  </template>
+  <script src="../js/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: "#app_slot",
+      data: {
+        message: "slot",
+
+      },
+      methods: {
+
+      },
+      components: {
+        cpn: {
+          template: "#cpnslot",
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

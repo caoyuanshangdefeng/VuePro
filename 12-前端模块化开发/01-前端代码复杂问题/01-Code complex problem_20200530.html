@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端代码复杂问题</title>
+</head>
+<body>
+  <!-- 
+    在网页开发的早期,js作为一种脚本语言,做一些简单的表单验证或动画实现等
+      直接将代码写在<script>标签中即可
+      html+css+js
+    随着Ajax异步请求的出现,慢慢形成了前后端分离
+        客户端需要完成的事情越来越多,代码量也是与日俱增
+        为了应对代码量的俱增,我们通常会将代码组织在多个js中,进行维护
+        但是这种维护方式,任然不能避免一些灾难的问题,
+        全局变量同名問題,由于js順序不同
+      1.项目组长
+      2.小明
+      3.小红
+    另外一种方式,这种代码的编写方式对js文件的依赖顺序几乎是强制的
+        但是当js文件过多,比如有几十个的时候,弄清楚它们的顺序是一件比较同时的事情
+        而且即使你弄清楚顺序了,也不能避免上面出现的这种尴尬问题的发生
+
+
+   -->
+   <div>
+
+   </div>
+   <script src='main.js'></script>
+   
+   <script src='xiaoming.js'></script>
+   <script src='xiaohong.js'></script>
+   <script src='mmm.js'></script>
+   <!-- <script src='mmm.js'></script> -->
+</body>
+</html>

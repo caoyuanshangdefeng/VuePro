@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue_v-show的使用</title>
+</head>
+
+<body>
+    <!-- 
+        v-show:
+            v-show 的用法和v-if非常相似,用于决定一个元素是否渲染
+        v-if和v-show对比:
+            1.v-if和v-show都可以决定一个元素是否渲染,开发中如何选择:
+            v-if当条件为false时,压根不会有对应的元素在DOM中
+            v-show当条件为false时,仅仅是将元素的display属性设置为none而已
+            当需要在显示与隐藏之间切片很频繁时,使用v-show
+            当只有一个切换时,通过使用v-if
+
+     -->
+    <div id="app_show">
+        <button @click="toggle">切换显示</button>
+        <h2 v-show="isShow">显示不显示</h2>
+        <h1 v-if="isShow">显示不显示</h2>
+
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app=new Vue({
+            el:"#app_show",
+            data:{
+                isShow:true,
+
+            },
+            methods:{
+                toggle(){
+                    this.isShow=!this.isShow
+                }
+            },
+            
+        })
+    </script>
+</body>
+</html>

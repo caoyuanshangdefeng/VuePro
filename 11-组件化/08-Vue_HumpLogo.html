@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue的驼峰标识问题</title>
+</head>
+<body>
+  <div id="app_HumpLogo">
+    <cpn :info-inner="info" :my-message="message"></cpn>
+  </div>
+
+  <template id="mycpn">
+    <div>
+      <h1>标题:{{myMessage}}</h1>
+      <p>内容:{{infoInner}}</p>
+    </div>
+  </template>
+  <script src="../js/vue.js"></script>
+  <script>
+
+    const cpn={
+      template:'#mycpn',
+      props:{
+        infoInner:{
+          type:Object,
+          default(){
+            return {}
+          },
+        },
+        myMessage:{
+          type:String,
+          default:"",
+        }
+      }
+      
+    }
+    
+  const app=new Vue({
+    el:"#app_HumpLogo",
+    data:{
+      message:"张振",
+      info:{
+        'name':"张三",
+        'age':29,
+        'height':1.78
+      }
+
+    },
+    methods:{
+
+    },
+    computed:{
+      
+
+    },
+    components:{
+      cpn
+    }
+  })
+  </script>
+</body>
+</html>

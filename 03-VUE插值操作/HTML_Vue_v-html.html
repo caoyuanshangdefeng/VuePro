@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+
+            display : none;
+
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id = "app_html" v-cloak>
+        <!-- v-html
+        服务器请求到数据本身就是一个HTML代码
+        如果我们直接通过{{}}来输出,会将HTML代码也一起输出
+        但是我们可能希望的是按照HTML格式进行解析,并且显示对应的内容
+
+        解析出HTML展示
+        使用v-html指令
+            该指令后面往往会跟上一个string类型
+            会经string的Html解析出来并且进行渲染
+
+        v-text:一般不使用,不够灵活;会出现覆盖问题
+        v-text作用和Mustache比较相似:都是用于将数据显示在界面中
+        v-text通常情况下,接受一个string类型
+        
+        v-pre:原封不动的进行显示,不做解析
+        v-pre用于跳过这个元素和其他元素的编译过程,用于显示原本的Mustache语法
+
+        v-cloak:
+        在VUE解析之前,div中有一个属性v-cloak;
+        在VUE解析之前,div中无属性v-cloak;
+        
+        
+        -->
+        <pre>
+            原封不动完全展示出来
+        </pre>
+        <h2>{{url}}</h2>
+        <h2 v-html="url"></h2>
+        <h2 v-text="message"></h2>
+        <h2 v-pre>{{鼬神}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        setTimeout(function(){
+        const app = new Vue({
+            el : "#app_html",
+            data : {
+            message: "你好Vue",
+            name : "鼬神",
+            url : '<a href="http://www.baidu.com">百度一下</a> '
+            
+
+            }
+        })
+    },1000)
+    </script>
+</body>
+</html>
