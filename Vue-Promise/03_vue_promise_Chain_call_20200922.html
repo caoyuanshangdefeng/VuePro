@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise的链式调用</title>
+</head>
+<body>
+    <script>
+        // 网络请求1:
+        // let isResult1=false;
+        // let isResult2=false;
+
+        // $ajax({
+        //     url:'',
+        //     success:function(){
+        //         console.log('RES1');
+        //         isResult1=true
+        //         handleResult()
+        //     }
+        // })
+        // // 网络请求2:
+        // $ajax({
+        //     url:'',
+        //     success:function(){
+        //         console.log('RES2');
+        //         isResult2=true
+        //         handleResult()
+        //     }
+        // })
+        // function handleResult(){
+        //     if(isResult1 && isResult2){
+        //         console.log('SUCCESS');
+        //     }
+        // }
+        // Promise 的all方法
+        // 要求传入的参数是个可迭代对象
+
+        Promise.all([
+            // new Promise((resolve,reject)=>{
+            //     $ajax({
+            //         url:'url1',
+            //         success:function(data){
+            //             console.log('RES1');
+            //             resolve(data)
+                        
+            //         }
+            //     })
+            // }),
+            // new Promise((resolve,reject)=>{
+            //     $ajax({
+            //         url:'url2',
+            //         success:function(data){
+            //             console.log('RES2');
+            //             resolve(data)
+                        
+            //         }
+            //     })
+            // }),
+            new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    console.log('RESULT1');
+                    resolve('setTimeout1')
+                },2000)
+            }),
+            new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    console.log('RESULT2');
+                    resolve('setTimeout2')
+                },4000)
+            }),
+
+        ]).then(results=>{
+            // results为一个数组,保存着上面的所有结果
+           
+            // console.log(results);
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // promise传入一个函数
+        // wrapped into
+        // 网络请求:aaa->自己处理10行;
+        // 处理:aaa111->自己处理10行;
+        // 处理:aaa111222->自己处理;
+
+        // new Promise((resolve,reject)=>{
+        //     setTimeout(()=>{
+        //         resolve('aaa')
+        //         reject('error message')
+        //     },1000)
+
+        // }).then(
+        //     data=>{
+        //         // 自己处理的10行代码
+        //         console.log(data,"第一层的10行处理代码");
+        //         // 处理aaa111,reject是个可选类型
+        //         return new Promise((resolve)=>{
+        //             resolve(data+'111')
+        //         })
+        // }).then(data=>{
+        //     console.log(data,'第二层的10行代码处理');
+        //     return new Promise((resolve)=>{
+        //         resolve(data+'222')
+        //     })
+        // }).then(data=>{
+        //     console.log(data,'第三层10行代码');
+        // })
+
+
+        // new Promise(resolve=>resolve(结果))简写
+        // 简写为Promise.resolve(data+'1111')
+        // new Promise((resolve,reject)=>{
+        //     setTimeout(()=>{
+        //         resolve('aaa')
+        //         // reject('error message')
+        //     },1000)
+
+        // }).then(
+        //     data=>{
+        //         // 自己处理的10行代码
+        //         console.log(data,"第一层的10行处理代码");
+        //         // 处理aaa111,reject是个可选类型,对结果进行第一次处理
+        //         return Promise.resolve(data+'1111')
+                
+        // }).then(res=>{
+        //     console.log(res,'第二层的10行代码处理');
+        //     return Promise.resolve(res+'2222')
+            
+        // }).then(res=>{
+        //     console.log(res,'第三层10行代码');
+        // })
+
+
+
+        // 省略掉Promise.resolve
+        // new Promise((resolve,reject)=>{
+        //     setTimeout(()=>{
+        //         resolve('aaa')
+        //         // reject('error message')
+        //     },1000)
+
+        // }).then(
+        //     data=>{
+        //         // 自己处理的10行代码
+        //         console.log(data,"第一层的10行处理代码");
+        //         // 处理aaa111,reject是个可选类型,对结果进行第一次处理
+        //         // return data+'1111'
+        //         throw 'error message'
+        //         // return Promise.reject('error message')
+                
+        // }).then(res=>{
+        //     console.log(res,'第二层的10行代码处理');
+        //     return res+'2222'
+            
+        // }).then(res=>{
+        //     console.log(res,'第三层10行代码');
+        // }).catch(err=>{
+        //     console.log(err);
+        // })
+    </script>
+
+</body>
+</html>
